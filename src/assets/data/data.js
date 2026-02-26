@@ -30,7 +30,7 @@ export const data = {
                 start: '17:00',
             },
             address: 'Số 100, Đẩu Vũ 3, phường Phù Liễn, TP Hải Phòng',
-            map: 'https://maps.app.goo.gl/q1Ask2Jgd4ekiiKBA'
+            map: 'https://maps.app.goo.gl/1wa3EKgkmZsdh6mz6'
         },
         reception: {
             year: '2026',
@@ -40,17 +40,13 @@ export const data = {
             hours: {
                 start: '11:00',
             },
-            address: 'Số 9, ngõ 139, Hoàng Quốc Việt, phường Phù Liễn, TP Hải Phòng',
-            map: 'https://maps.app.goo.gl/q1Ask2Jgd4ekiiKBA'
+            address: 'Số 1 Trần Tất Văn, phường Phù Liễn, TP Hải Phòng',
+            map: 'https://maps.app.goo.gl/Eb1gy26VDebdPmt58'
         },
-        // address: 'Kp. Lorem, RT 000/ RW 000, Desa.Lorem, Kec.Ipsum, Kab.Lorem, Lorem (1234)'
     },
 
     link: {
         calendar: 'https://calendar.app.google/oSVLRMYC79GzuA4f9',
-        map: 'https://maps.app.goo.gl/q1Ask2Jgd4ekiiKBA',
-        map_g: 'https://maps.google.com/?q=100+Đẩu+Vũ+3,+Phù+Liễn,+Hải+Phòng&entry=gps&lucs=swa',
-        map_t: 'https://www.google.com/maps/dir/?api=1&destination=100+Đẩu+Vũ+3,+Phù+Liễn,+Hải+Phòng',
     },
 
     galeri: [
