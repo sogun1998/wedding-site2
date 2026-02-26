@@ -46,7 +46,7 @@ export const data = {
     },
 
     link: {
-        calendar: 'https://calendar.app.google/oSVLRMYC79GzuA4f9',
+        calendar: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MXMxM2VrbGtiZmZpNXFvZW9ydXZlaGxwZmEgbmd1eWVuZHVjYW5oMjY4OThAbQ&tmsrc=nguyenducanh26898%40gmail.com',
     },
 
     galeri: [
