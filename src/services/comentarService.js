@@ -23,7 +23,6 @@ export const comentarService = {
         try {
             const response = await fetch(data.api, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json'
                 },
