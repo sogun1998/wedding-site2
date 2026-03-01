@@ -2,7 +2,7 @@
  * Proxy API để bypass CORS khi gọi Google Apps Script.
  * Cập nhật SCRIPT_URL khi bạn thay đổi deployment Google Apps Script.
  */
-const SCRIPT_URL = process.env.GOOGLE_SCRIPT_API || 'https://script.google.com/macros/s/AKfycbzY1b7FM9uN8JinqA1Ey85v1AM0xyLn_sC4p-B2Xgyw0c46ILMT1klXU2H_GeLjdkCE/exec';
+const SCRIPT_URL = process.env.GOOGLE_SCRIPT_API || 'https://script.google.com/macros/s/AKfycbzowQYnro_hCoIinNDxectBSWnRTfe3ENertGn7sXc1yQDt70Cdy-ryiKrwjnn4dY-4/exec';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
