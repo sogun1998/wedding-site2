@@ -11,12 +11,17 @@ import {comentarService} from "../services/comentarService.js";
 
 export const wishas = () => {
     const wishasContainer = document.querySelector('.wishas');
-    const [_, form] = wishasContainer.children[2].children;
-    const [peopleComentar, ___, containerComentar] = wishasContainer.children[3].children;
+    const form = document.getElementById('form-wishas');
     const buttonForm = document.getElementById('btn-submit-wishas');
     const feedbackEl = document.getElementById('wishas-feedback');
-    const pageNumber = wishasContainer.querySelector('.page-number');
-    const [prevButton, nextButton] = wishasContainer.querySelectorAll('.button-grup button');
+    const peopleComentar = document.getElementById('wishas-people-count');
+    const containerComentar = document.getElementById('wishas-comentar-list');
+    const pageNumber = wishasContainer?.querySelector('.page-number');
+    const prevNextButtons = wishasContainer?.querySelectorAll('.button-grup button');
+    const prevButton = prevNextButtons?.[0];
+    const nextButton = prevNextButtons?.[1];
+
+    if (!form || !buttonForm) return;
 
     const listItemBank = (data) => (
         `  <figure data-aos="zoom-in" data-aos-duration="1000">
@@ -26,9 +31,8 @@ export const wishas = () => {
     );
 
     const initialBank = () => {
-        const wishasBank = wishasContainer.children[1];
-        const [_, __, containerBank] = wishasBank.children;
-
+        const containerBank = document.getElementById('wishas-bank-container');
+        if (!containerBank) return;
         renderElement(data.bank, containerBank, listItemBank);
     };
 
@@ -60,14 +64,20 @@ export const wishas = () => {
     let lengthComentar;
 
     const initialComentar = async () => {
+        if (!containerComentar || !peopleComentar || !pageNumber) return;
         containerComentar.innerHTML = `<h1 style="font-size: 1rem; margin: auto">Loading...</h1>`;
         peopleComentar.textContent = '...';
         pageNumber.textContent = '..';
 
         try {
             const response = await comentarService.getComentar();
-            const {comentar} = response;
-
+            if (response.error) {
+                peopleComentar.textContent = 'Không tải được lời chúc';
+                pageNumber.textContent = '1';
+                containerComentar.innerHTML = '';
+                return;
+            }
+            const comentar = response.comentar || [];
             lengthComentar = comentar.length;
             comentar.reverse();
 
@@ -80,7 +90,9 @@ export const wishas = () => {
             pageNumber.textContent = '1';
             renderElement(comentar.slice(startIndex, endIndex), containerComentar, listItemComentar);
         } catch (error) {
-            return `Error : ${error.message}`;
+            peopleComentar.textContent = 'Lỗi tải dữ liệu';
+            pageNumber.textContent = '1';
+            containerComentar.innerHTML = '';
         }
     };
 
@@ -118,7 +130,7 @@ export const wishas = () => {
                 showFeedback('Đã gửi lời chúc! Cảm ơn bạn.');
                 lengthComentar = (lengthComentar || 0) + 1;
                 if (peopleComentar) peopleComentar.textContent = `${lengthComentar} người đã gửi lời chúc`;
-                containerComentar.insertAdjacentHTML('afterbegin', listItemComentar(comentar));
+                if (containerComentar) containerComentar.insertAdjacentHTML('afterbegin', listItemComentar(comentar));
                 form.reset();
             } else {
                 showFeedback(result.error || 'Gửi thất bại, vui lòng thử lại.', true);
@@ -138,6 +150,7 @@ export const wishas = () => {
     let endIndex = itemsPerPage;
 
     const updatePageContent = async () => {
+        if (!containerComentar || !pageNumber || !prevButton || !nextButton) return;
         containerComentar.innerHTML = '<h1 style="font-size: 1rem; margin: auto">Loading...</h1>';
         pageNumber.textContent = '..';
         prevButton.disabled = true;
@@ -145,21 +158,25 @@ export const wishas = () => {
 
         try {
             const response = await comentarService.getComentar();
-            const {comentar} = response;
-
+            if (response.error) {
+                containerComentar.innerHTML = '';
+                pageNumber.textContent = currentPage.toString();
+                return;
+            }
+            const comentar = response.comentar || [];
             comentar.reverse();
 
             renderElement(comentar.slice(startIndex, endIndex), containerComentar, listItemComentar);
             pageNumber.textContent = currentPage.toString();
         } catch (error) {
-            console.log(error);
+            console.error(error);
         } finally {
             prevButton.disabled = false;
             nextButton.disabled = false;
         }
-    }
+    };
 
-    nextButton.addEventListener('click', async () => {
+    nextButton?.addEventListener('click', async () => {
         if (endIndex <= lengthComentar) {
             currentPage++;
             startIndex = (currentPage - 1) * itemsPerPage;
@@ -168,7 +185,7 @@ export const wishas = () => {
         }
     });
 
-    prevButton.addEventListener('click', async () => {
+    prevButton?.addEventListener('click', async () => {
         if (currentPage > 1) {
             currentPage--;
             startIndex = (currentPage - 1) * itemsPerPage;
