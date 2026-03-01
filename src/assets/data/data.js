@@ -23,9 +23,9 @@ export const data = {
     time: {
         marriage: {
             year: '2026',
-            month: 'March',
+            month: '3',
             date: '21',
-            day: 'Saturday',
+            day: 'Thứ 7',
             hours: {
                 start: '17:00',
             },
@@ -34,9 +34,9 @@ export const data = {
         },
         reception: {
             year: '2026',
-            month: 'March',
+            month: '3',
             date: '22',
-            day: 'Sunday',
+            day: 'Chủ nhật',
             hours: {
                 start: '11:00',
             },

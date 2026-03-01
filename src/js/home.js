@@ -1,5 +1,4 @@
 import { data } from "../assets/data/data.js";
-import { monthNameToNumber } from "../utils/helper.js";
 
 export const home = () => {
     const homeContainer = document.querySelector('.home');
@@ -16,9 +15,11 @@ export const home = () => {
 
     const generateTimeContent = ({ time }) => {
         const { year, month, date, day } = time.reception;
+        const monthPadded = String(month).padStart(2, '0');
+        const datePadded = String(date).padStart(2, '0');
         return `
-        <time datetime="${year}-${String(monthNameToNumber(month)).padStart(2, '0')}-${String(date).padStart(2, '0')}">
-            ${day}, ${date} ${month} ${year}
+        <time datetime="${year}-${monthPadded}-${datePadded}">
+            ${day}, ${date}/${month}/${year}
         </time>`;
     };
 
@@ -54,35 +55,19 @@ export const home = () => {
         }
     };
 
-    const monthMap = {
-        January: 1,
-        February: 2,
-        March: 3,
-        April: 4,
-        May: 5,
-        June: 6,
-        July: 7,
-        August: 8,
-        September: 9,
-        October: 10,
-        November: 11,
-        December: 12,
-    };
-
     let countdownInterval = null;
 
     const startCountdown = (homeTime, timeData) => {
         const { year, month, date } = timeData.reception;
+        const monthNum = parseInt(month, 10);
 
-        const monthNum = monthMap[month];
-
-        if (!monthNum) {
-            console.error("Month không hợp lệ:", month);
+        if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
+            console.error("Tháng không hợp lệ:", month);
             return;
         }
 
-        // Dùng constructor số để tránh bug timezone
-        const endTime = new Date(year, monthNum - 1, date, 0, 0, 0);
+        // Date constructor: tháng 0-indexed (0 = Jan, 11 = Dec)
+        const endTime = new Date(Number(year), monthNum - 1, Number(date), 0, 0, 0);
 
         console.log("Countdown target:", endTime);
 
