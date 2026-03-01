@@ -38,12 +38,12 @@ export const wishas = () => {
 
         if (newDate.days < 1) {
             if (newDate.hours < 1) {
-                date = `${newDate.minutes} menit yang lalu`;
+                date = `${newDate.minutes} phút trước`;
             } else {
-                date = `${newDate.hours} jam, ${newDate.minutes} menit yang lalu`;
+                date = `${newDate.hours} giờ, ${newDate.minutes} phút trước`;
             }
         } else {
-            date = `${newDate.days} hari, ${newDate.hours} jam yang lalu`;
+            date = `${newDate.days} ngày, ${newDate.hours} giờ trước`;
         }
 
         return ` <li data-aos="zoom-in" data-aos-duration="1000">
@@ -71,9 +71,9 @@ export const wishas = () => {
             comentar.reverse();
 
             if (comentar.length > 0) {
-                peopleComentar.textContent = `${comentar.length} Orang telah mengucapkan`;
+                peopleComentar.textContent = `${comentar.length} người đã gửi lời chúc`;
             } else {
-                peopleComentar.textContent = `Belum ada yang mengucapkan`;
+                peopleComentar.textContent = `Chưa có ai gửi lời chúc`;
             }
 
             pageNumber.textContent = '1';
@@ -90,7 +90,7 @@ export const wishas = () => {
         const comentar = {
             id: generateRandomId(),
             name: e.target.name.value,
-            status: e.target.status.value === 'y' ? 'Hadir' : 'Tidak Hadir',
+            status: e.target.status.value === 'y' ? 'Đến' : 'Không đến',
             message: e.target.message.value,
             date: getCurrentDateTime(),
             color: generateRandomColor(),
@@ -103,7 +103,7 @@ export const wishas = () => {
 
             lengthComentar = response.comentar.length;
 
-            peopleComentar.textContent = `${++response.comentar.length} Orang telah mengucapkan`;
+            peopleComentar.textContent = `${++response.comentar.length} người đã gửi lời chúc`;
             containerComentar.insertAdjacentHTML('afterbegin', listItemComentar(comentar));
         } catch (error) {
             return `Error : ${error.message}`;
