@@ -91,6 +91,11 @@
     min-height: 6rem;
 }
 
+.wishas-feedback {
+    font-size: 0.95rem;
+    min-height: 1.4rem;
+}
+
 .wishas div:nth-of-type(2) > form button {
     width: 100%;
     color: #fff;

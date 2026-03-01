@@ -189,7 +189,7 @@ Nếu có thể, bạn hãy tới tham dự Đám cưới, chung vui và Mừng 
       <div data-aos="zoom-in" data-aos-duration="1000">
         <h2>Bạn sẽ đến chứ ?</h2>
         <h3> Để lại lời chúc và xác nhận sự có mặt của mình để chúng tôi chuẩn bị đón tiếp một cách chu đáo nhất! Trân trọng!</h3>
-        <form>
+        <form id="form-wishas" action="javascript:void(0);">
           <label for="name">Họ và tên</label>
           <input type="text" name="name" id="name" placeholder="Nguyễn Văn A" autoComplete="off" required />
           <label for="status">Quý khách sẽ tham dự chứ</label>
@@ -200,8 +200,8 @@ Nếu có thể, bạn hãy tới tham dự Đám cưới, chung vui và Mừng 
           </select>
           <label for="message">Gửi những lời chúc tốt đẹp nhất</label>
           <textarea name="message" id="message" placeholder="Chúc hai bạn trăm năm hạnh phúc" required minlength="8"></textarea>
-          <button type="submit">Gửi lời chúc
-          </button>
+          <p class="wishas-feedback" id="wishas-feedback" aria-live="polite"></p>
+          <button type="button" id="btn-submit-wishas">Gửi lời chúc</button>
         </form>
       </div>
 

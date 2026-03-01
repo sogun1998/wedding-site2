@@ -11,11 +11,23 @@ const corsHeaders = {
   'Access-Control-Max-Age': '86400',
 };
 
+function setCors(res) {
+  Object.entries(corsHeaders).forEach(([k, v]) => res.setHeader(k, v));
+}
+
+/** Đọc body POST từ request (Vercel có thể không tự parse req.body). */
+function readBody(req) {
+  return new Promise((resolve, reject) => {
+    let data = '';
+    req.on('data', (chunk) => { data += (chunk || ''); });
+    req.on('end', () => resolve(data));
+    req.on('error', reject);
+  });
+}
+
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    setCors(res);
     return res.status(204).end();
   }
 
@@ -23,27 +35,33 @@ module.exports = async function handler(req, res) {
     if (req.method === 'GET') {
       const response = await fetch(SCRIPT_URL);
       const data = await response.text();
-      Object.entries(corsHeaders).forEach(([k, v]) => res.setHeader(k, v));
+      setCors(res);
       res.setHeader('Content-Type', 'application/json');
       return res.status(response.status).send(data);
     }
 
     if (req.method === 'POST') {
+      let body = req.body;
+      if (body === undefined || body === null || typeof body !== 'object') {
+        const raw = await readBody(req);
+        body = raw ? JSON.parse(raw) : {};
+      }
       const response = await fetch(SCRIPT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(req.body),
+        body: JSON.stringify(body),
       });
       const data = await response.text();
-      Object.entries(corsHeaders).forEach(([k, v]) => res.setHeader(k, v));
+      setCors(res);
       res.setHeader('Content-Type', 'application/json');
       return res.status(response.status).send(data);
     }
 
+    setCors(res);
     return res.status(405).json({ error: 'Method not allowed' });
   } catch (error) {
     console.error('Proxy error:', error);
-    Object.entries(corsHeaders).forEach(([k, v]) => res.setHeader(k, v));
-    return res.status(500).json({ error: error.message });
+    setCors(res);
+    return res.status(500).json({ status: 500, message: error.message });
   }
-}
+};

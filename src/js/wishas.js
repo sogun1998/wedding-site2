@@ -13,7 +13,8 @@ export const wishas = () => {
     const wishasContainer = document.querySelector('.wishas');
     const [_, form] = wishasContainer.children[2].children;
     const [peopleComentar, ___, containerComentar] = wishasContainer.children[3].children;
-    const buttonForm = form.children[6];
+    const buttonForm = document.getElementById('btn-submit-wishas');
+    const feedbackEl = document.getElementById('wishas-feedback');
     const pageNumber = wishasContainer.querySelector('.page-number');
     const [prevButton, nextButton] = wishasContainer.querySelectorAll('.button-grup button');
 
@@ -83,33 +84,50 @@ export const wishas = () => {
         }
     };
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        buttonForm.textContent = 'Loading...';
+    const showFeedback = (message, isError = false) => {
+        if (!feedbackEl) return;
+        feedbackEl.textContent = message;
+        feedbackEl.style.color = isError ? '#c0392b' : '#27ae60';
+        feedbackEl.style.marginTop = '0.5rem';
+    };
+
+    form.addEventListener('submit', (e) => e.preventDefault());
+
+    buttonForm.addEventListener('click', async () => {
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+        showFeedback('');
+        buttonForm.disabled = true;
+        buttonForm.textContent = 'Đang gửi...';
 
         const comentar = {
             id: generateRandomId(),
-            name: e.target.name.value,
-            status: e.target.status.value === 'y' ? 'Đến' : 'Không đến',
-            message: e.target.message.value,
+            name: form.name.value.trim(),
+            status: form.status.value === 'y' ? 'Đến' : 'Không đến',
+            message: form.message.value.trim(),
             date: getCurrentDateTime(),
             color: generateRandomColor(),
         };
 
         try {
-            const response = await comentarService.getComentar();
+            const result = await comentarService.addComentar(comentar);
 
-            await comentarService.addComentar(comentar);
-
-            lengthComentar = response.comentar.length;
-
-            peopleComentar.textContent = `${++response.comentar.length} người đã gửi lời chúc`;
-            containerComentar.insertAdjacentHTML('afterbegin', listItemComentar(comentar));
-        } catch (error) {
-            return `Error : ${error.message}`;
+            if (result.ok) {
+                showFeedback('Đã gửi lời chúc! Cảm ơn bạn.');
+                lengthComentar = (lengthComentar || 0) + 1;
+                if (peopleComentar) peopleComentar.textContent = `${lengthComentar} người đã gửi lời chúc`;
+                containerComentar.insertAdjacentHTML('afterbegin', listItemComentar(comentar));
+                form.reset();
+            } else {
+                showFeedback(result.error || 'Gửi thất bại, vui lòng thử lại.', true);
+            }
+        } catch (err) {
+            showFeedback(err && err.message ? err.message : 'Lỗi kết nối, vui lòng thử lại.', true);
         } finally {
-            buttonForm.textContent = 'Kirim';
-            form.reset();
+            buttonForm.disabled = false;
+            buttonForm.textContent = 'Gửi lời chúc';
         }
     });
 
