@@ -29,10 +29,12 @@ body {
     font-family: var(--font-body);
     color: var(--primary-font-color);
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 body.active {
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 body::-webkit-scrollbar {
