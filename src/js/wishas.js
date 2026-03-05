@@ -21,7 +21,8 @@ export const wishas = () => {
     const prevButton = prevNextButtons?.[0];
     const nextButton = prevNextButtons?.[1];
 
-    if (!form || !buttonForm) return;
+    // Nếu không có container hoặc form thì bỏ qua khởi tạo
+    if (!wishasContainer || !form || !buttonForm) return;
 
     const listItemBank = (data) => (
         `  <figure data-aos="zoom-in" data-aos-duration="1000">
@@ -36,10 +37,11 @@ export const wishas = () => {
         renderElement(data.bank, containerBank, listItemBank);
     };
 
-    // Luôn khởi tạo khối ngân hàng trước, kể cả khi form không tồn tại
-    initialBank();
-
-    if (!form || !buttonForm) return;
+    // state phân trang cho lời chúc
+    let currentPage = 1;
+    let itemsPerPage = 4;
+    let startIndex = 0;
+    let endIndex = itemsPerPage;
 
     const listItemComentar = (data) => {
         const name = formattedName(data.name);
@@ -93,7 +95,11 @@ export const wishas = () => {
             }
 
             pageNumber.textContent = '1';
-            renderElement(comentar.slice(startIndex, endIndex), containerComentar, listItemComentar);
+            renderElement(
+                comentar.slice(startIndex, endIndex),
+                containerComentar,
+                listItemComentar
+            );
         } catch (error) {
             peopleComentar.textContent = 'Lỗi tải dữ liệu';
             pageNumber.textContent = '1';
@@ -149,11 +155,6 @@ export const wishas = () => {
     });
 
     // click prev & next
-    let currentPage = 1;
-    let itemsPerPage = 4;
-    let startIndex = 0;
-    let endIndex = itemsPerPage;
-
     const updatePageContent = async () => {
         if (!containerComentar || !pageNumber || !prevButton || !nextButton) return;
         containerComentar.innerHTML = '<h1 style="font-size: 1rem; margin: auto">Loading...</h1>';

@@ -2,6 +2,12 @@ import {data} from "../assets/data/data.js";
 
 export const galeri = () => {
     const galeriElement = document.querySelector('.galeri');
+
+    // Nếu không có section galeri trên trang thì bỏ qua
+    if (!galeriElement) {
+        return;
+    }
+
     const showAllContainer = galeriElement.querySelector('div:nth-of-type(2)');
 
     const [_, figureElement, paginationElement, prevButton, nextButton, showAllButton] = galeriElement.children[0].children;
