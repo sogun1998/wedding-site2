@@ -43,6 +43,8 @@
     align-items: center;
     justify-content: center;
     z-index: 999;
+    width: 100vw;
+    overflow: hidden;
 }
 
 .memories-lightbox.is-active {
@@ -57,9 +59,12 @@
 
 .memories-lightbox__content {
     position: relative;
-    width: min(1000px, 100%);
+    width: 100%;
+    max-width: 640px;
     max-height: 90vh;
-    margin: 0 1rem;
+    margin: 0 auto;
+    padding: 0 1rem 1rem;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     background: transparent;
