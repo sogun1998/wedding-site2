@@ -36,6 +36,11 @@ export const wishas = () => {
         renderElement(data.bank, containerBank, listItemBank);
     };
 
+    // Luôn khởi tạo khối ngân hàng trước, kể cả khi form không tồn tại
+    initialBank();
+
+    if (!form || !buttonForm) return;
+
     const listItemComentar = (data) => {
         const name = formattedName(data.name);
         const newDate = formattedDate(data.date);

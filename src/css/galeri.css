@@ -25,143 +25,59 @@
 .galeri .container figure {
     width: 100%;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow-x: auto;
-    scrollbar-width: none;
-}
-
-.galeri .container figure::-webkit-scrollbar,
-.galeri div:nth-of-type(2)::-webkit-scrollbar {
-    display: none;
+    display: grid;
+    /* Lưới 4 cột để tạo mosaic giống mockup Our Memories */
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 8rem;
+    grid-auto-flow: dense;
+    gap: 1.5rem;
 }
 
 .galeri .container figure img {
     width: 100%;
-    height: 35rem;
+    height: 100%;
     object-fit: cover;
     border-radius: 15px;
     transition: var(--transition-small);
 }
 
-.galeri .container ul {
-    padding: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 5.6rem;
+/* Bố cục mosaic cố định giống hình Our Memories */
+/* Hàng 1: 2 ảnh ngang lớn */
+.galeri .container figure img:nth-child(1),
+.galeri .container figure img:nth-child(2) {
+    grid-column: span 2;
+    grid-row: span 2;
 }
 
-.galeri .container ul li {
-    width: 1.8rem;
-    height: 0.25rem;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 1px;
-    list-style-type: none;
-    cursor: pointer;
+/* Hàng 2: 1 ảnh dọc lớn bên trái, 2 ảnh nhỏ xếp dọc bên phải */
+.galeri .container figure img:nth-child(3) {
+    grid-column: span 2;
+    grid-row: span 3;
 }
 
-.galeri .container ul li:hover, .galeri .container ul li.active {
-    background-color: #fff;
+.galeri .container figure img:nth-child(4),
+.galeri .container figure img:nth-child(5) {
+    grid-column: span 2;
+    grid-row: span 1;
 }
 
+/* Hàng 3: 2 ảnh ngang phía dưới */
+.galeri .container figure img:nth-child(6),
+.galeri .container figure img:nth-child(7) {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+/* Ẩn các thành phần slideshow cũ (dot, prev/next, xem tất cả) */
+.galeri .container ul,
 .galeri .container button:nth-of-type(1),
-.galeri .container button:nth-of-type(2) {
-    font-size: 4rem;
-    color: rgba(255, 255, 255, 0.5);
-    background: none;
-    border: none;
-    position: absolute;
-    top: 24.6rem;
-}
-
-.galeri .container button:nth-of-type(1) i:hover,
-.galeri .container button:nth-of-type(2) i:hover {
-    color: #fff;
-    cursor: pointer;
-}
-
-.galeri .container button:nth-of-type(1) {
-    left: 2rem;
-}
-
-.galeri .container button:nth-of-type(2) {
-    right: 2rem;
-}
-
+.galeri .container button:nth-of-type(2),
 .galeri .container button:nth-of-type(3) {
-    padding: 0.5rem 1rem;
-    background-color: #fff;
-    border: 1px solid #000;
-    border-radius: 20px;
-    margin-top: 1rem;
-    transition: var(--transition-small);
-}
-
-.galeri .container button:nth-of-type(3):hover {
-    color: #fff;
-    background-color: #000;
-    cursor: pointer;
+    display: none;
 }
 
 .galeri div:nth-of-type(2) {
-    width: 100%;
-    height: 100vh;
-    padding: 2rem 8rem;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #fff;
-    z-index: 99;
-    overflow-y: auto;
-    transition: all .3s ease;
-    transform: scale(0);
-    opacity: 0;
-    transform-origin: bottom;
-}
-
-.galeri div:nth-of-type(2) > div {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -1px 1px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-    padding: 2rem;
-    margin-top: 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    gap: 2rem;
-}
-
-.galeri div:nth-of-type(2) > div img {
-    width: 100%;
-    object-fit: cover;
-    border-radius: 20px;
-}
-
-.galeri div:nth-of-type(2) button {
-    padding:0;
-    font-size: 2rem;
-    background:none;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    transition: var(--transition-small);
-}
-
-.galeri div:nth-of-type(2) button:hover i {
-    text-shadow: 1px 2px 5px rgba(0,0,0,0.5);
-}
-
-.galeri div:nth-of-type(2).active {
-    transform: scale(1);
-    opacity: 1;
+    display: none;
 }
 
 .galeri > i {
