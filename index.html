@@ -232,6 +232,35 @@
           </div>
         </div>
         <i class="bx bx-heart" aria-hidden="true"></i>
+
+        <!-- Lightbox slideshow for memories -->
+        <div class="memories-lightbox" aria-hidden="true" role="dialog" aria-label="Memories slideshow">
+          <div class="memories-lightbox__overlay"></div>
+          <div class="memories-lightbox__content">
+            <button type="button" class="memories-lightbox__close" aria-label="Đóng slideshow">
+              &times;
+            </button>
+
+            <div class="memories-lightbox__main">
+              <button type="button" class="memories-lightbox__nav memories-lightbox__nav--prev" aria-label="Ảnh trước">
+                <i class="bx bx-chevron-left"></i>
+              </button>
+
+              <figure class="memories-lightbox__figure">
+                <img src="" alt="" />
+                <figcaption class="memories-lightbox__counter"></figcaption>
+              </figure>
+
+              <button type="button" class="memories-lightbox__nav memories-lightbox__nav--next" aria-label="Ảnh sau">
+                <i class="bx bx-chevron-right"></i>
+              </button>
+            </div>
+
+            <div class="memories-lightbox__thumbs" aria-label="Danh sách ảnh kỷ niệm">
+              <!-- thumbnails will be injected by JS -->
+            </div>
+          </div>
+        </div>
       </section>
 
       <section class="wishas" id="wishas">
