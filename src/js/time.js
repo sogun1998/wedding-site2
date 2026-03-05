@@ -11,7 +11,7 @@ export const time = () => {
          Đ/c:  ${details.address} </p>
          <a href="${details.map}" role="link" target="_blank" aria-label="link google maps" data-aos="zoom-in" data-aos-duration="1000">
         <i class="bx bxs-map-alt" aria-hidden="true"></i>
-        <span> google maps</span>
+        <span> Maps</span>
          </a>`
 
     );
