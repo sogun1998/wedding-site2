@@ -127,11 +127,21 @@
 
     .memories {
         padding: 3rem 1.4rem 4rem;
+        overflow-x: hidden;
+    }
+
+    .memories-container {
+        overflow-x: hidden;
     }
 
     .memories-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
+        min-width: 0;
+    }
+
+    .memories-grid img {
+        max-width: 100%;
     }
 
     .memories-lightbox__content {
