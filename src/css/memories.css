@@ -35,6 +35,31 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
 
+/* Desktop layout: ảnh 3 đứng bên trái, 4-5 bên phải thành 1 bộ */
+@media screen and (min-width: 1024px) {
+    .memories-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr 1fr auto;
+        grid-auto-flow: dense;
+    }
+
+    /* Ảnh 3 (3.png) đứng, chiếm trọn chiều cao 2 hàng bên trái */
+    .memories-grid img:nth-child(3) {
+        grid-column: 1;
+        grid-row: span 2;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Ảnh 4 và 5 (4.png, 5.png) xếp dọc bên phải, cùng chiều cao với cột trái */
+    .memories-grid img:nth-child(4),
+    .memories-grid img:nth-child(5) {
+        grid-column: 2;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
 /* Lightbox slideshow */
 .memories-lightbox {
     position: fixed;
